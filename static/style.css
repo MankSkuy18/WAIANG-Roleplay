@@ -1,0 +1,114 @@
+/* static/style.css */
+
+/* Class Khusus untuk Background Batik */
+.bg-batik {
+    /* Mengambil gambar dari folder static/images */
+    background-image: url('images/batik2.jpg'); 
+    background-size: cover;       /* Agar gambar memenuhi layar */
+    background-position: center;  /* Posisi gambar di tengah */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Agar background diam saat di-scroll */
+}
+
+body {
+    background-color: #0b0c10; /* Warna Latar Sangat Gelap */
+    color: #c5c6c7; /* Warna Teks Abu terang */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar Custom */
+.navbar {
+    background-color: #1f2833 !important;
+    border-bottom: 3px solid #66fcf1; /* Garis Neon Biru */
+}
+
+.navbar-brand {
+    color: #66fcf1 !important; /* Warna Neon */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: #45a29e !important;
+}
+
+/* Update Card agar lebih kontras di atas Batik */
+.card {
+    /* Warna hitam transparan (Opacity 0.9) agar motif batik di belakang sedikit terlihat tapi tulisan jelas */
+    background-color: rgba(11, 12, 16, 0.92) !important; 
+    border: 1px solid #d4af37; /* Ganti border neon biru jadi warna EMAS agar cocok dengan Batik */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #d4af37; /* Garis emas */
+    color: #d4af37; /* Teks emas */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Tombol Custom */
+/* Mengubah tombol agar warnanya lebih 'Emas' atau netral, cocok dengan batik merah/coklat */
+.btn-primary {
+    background-color: #8b0000; /* Merah Marun */
+    border-color: #8b0000;     /* Border Emas */
+    color: #ffd700;            /* Teks Emas */
+}
+
+.btn-primary:hover {
+    background-color: #a52a2a;
+    border-color: #a52a2a;
+}
+
+.btn-outline-neon {
+    color: #66fcf1;
+    border-color: #66fcf1;
+}
+
+.btn-outline-neon:hover {
+    background-color: #66fcf1;
+    color: #0b0c10;
+}
+
+/* Input Form */
+.form-control {
+    background-color: #0b0c10;
+    border: 1px solid #66fcf1;
+    color: #66fcf1;
+}
+
+.form-control:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 5px #d4af37;
+}
+
+/* Jumbotron / Hero Section */
+.hero-section {
+    padding: 80px 20px;
+    background: linear-gradient(rgba(11, 12, 16, 0.9), rgba(11, 12, 16, 0.8)), url('https://source.unsplash.com/1600x900/?cyberpunk,city');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    border: 1px solid #1f2833;
+    margin-bottom: 30px;
+}
+
+.agent-name {
+    color: #ffd700;
+    font-weight: 800;
+    font-family: 'Segoe UI', monospace;
+    border-bottom: 2px solid #ffd700;
+    padding-bottom: 2px;
+    margin-left: 5px;
+}
+
+h1, h2, h3 {
+    color: #ffffff;
+}
