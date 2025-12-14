@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center hero-section">
+    <h1 class="display-3 fw-bold mb-3">SELAMAT DATANG!</h1>
+    
+    {% if current_user.is_authenticated %}
+        <p class="lead">Identitas terverifikasi. Selamat datang, <strong>{{ current_user.name }}</strong>.</p>
+        <hr class="my-4" style="border-color: #66fcf1;">
+        <p>Mari kita mulai narasi yang menarik!</p>
+        
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a class="btn btn-danger btn-lg" href="{{ url_for('adventure_list') }}">Mainkan Roleplay</a>
+            <a class="btn btn-outline-neon btn-lg px-4" href="/api/me" target="_blank">Profil Saya (JSON)</a>
+        </div>
+    {% else %}
+        <p class="lead">Dunia di mana kamu bisa menjadi siapa saja. Mulai ceritamu sekarang.</p>
+        <hr class="my-4" style="border-color: #66fcf1;">
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a class="btn btn-primary btn-lg px-4 gap-3" href="{{ url_for('login') }}">Login</a>
+            <a class="btn btn-outline-light btn-lg px-4" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="btn btn-outline-warning btn-lg px-4" href="{{ url_for('guest_login') }}">Jelajah Sebagai Tamu</a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h3>Faksi Polisi</h3>
+            <p>Menjaga keamanan Metro City dari ancaman kriminal.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h3>Faksi Medis</h3>
+            <p>Penyelamat nyawa di tengah kekacauan kota.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 mb-3">
+            <h3>Warga Sipil</h3>
+            <p>Pekerja keras, pengusaha, atau penguasa jalanan?</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Override Background Khusus Halaman Ini -->
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='images/batik2.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .btn-google { background-color: #db4437; color: white; border: none; }
+    .btn-facebook { background-color: #4267B2; color: white; border: none; }
+    .btn-x { background-color: #000000; color: white; border: 1px solid #333; }
+
+    .btn-social:hover { opacity: 0.9; color: white; }
+    .divider { display: flex; align-items: center; text-align: center; color: #ccc; }
+    .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #ccc; }
+    .divider:not(:empty)::before { margin-right: .25em; }
+    .divider:not(:empty)::after { margin-left: .25em; }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header text-center">
+                Login
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/login">
+                    <div class="mb-3">
+                        <label>Email (User ID)</label>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Password / Kode Keamanan</label>
+                        <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+                    <div class="divider my-3">ATAU MASUK DENGAN</div>
+                    <div class="d-grid gap-2">
+                    <a href="{{ url_for('login_google') }}" class="btn btn-google btn-social">
+                        <i class="fab fa-google me-2"></i> Lanjut dengan Google
+                    </a>
+                    <a href="{{ url_for('login_facebook') }}" class="btn btn-facebook btn-social">
+                        <i class="fab fa-facebook-f me-2"></i> Lanjut dengan Facebook
+                    </a>
+                </div>
+
+                </form>
+            </div>
+            <div class="card-footer text-center bg-dark border-top border-secondary">
+                <small>Belum punya akses? <a href="{{ url_for('signup') }}" class="text-info">Daftar disini</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

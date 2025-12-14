@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body { background-color: #0b0c10; color: #c5c6c7; }
+    .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #1f2833;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .gold-title { color: #d4af37; font.family: 'Georgia', serif; }
+    .btn-gold {
+        background-color: #d4af37; color: #000; font-weight: bold; border: none;
+        width: 100%; padding: 10px;
+    }
+    .btn-gold:hover { background-color: #f1c40f; }
+    .form-control {
+        background-color: #0b0c10; border: 1px solid #45a29e; color: #fff;
+    }
+    .form-control:focus {
+        background-color: #0b0c10; color: #fff; border-color: #d4af37;
+    }
+</style>
+
+<div class="container text-center">
+    <a href="{{ url_for('adventure_list') }}" class="text-secondary mb-4 d-block text-decoration-none">Back to Dashboard</a>
+
+    <div class="form-container text-start">
+        <h2 class="text-center gold-title mb-4">New Adventure</h2>
+
+        <form method="POST">
+            <div class="mb-3">
+                <label class="text-secondary">Character Name</label>
+                <input type="text" name="character_name" class="form-control" placeholder="e.g. Aragorn" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="text-secondary">Starting Scenario</label>
+                <textarea name="scenario" class="form-control" rows="4" placeholder="You wake up in a dark dungeon..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold">Start Adventure</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

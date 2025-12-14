@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAIANG | Guest Mode</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            /* 1. BACKGROUND HUTAN (Sama seperti halaman member) */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x900/?forest,dark,fantasy');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Georgia', serif;
+            overflow: hidden; 
+        }
+
+        /* 2. STYLE KHUSUS BANNER PERINGATAN (Agar rapi di atas background hutan) */
+        .guest-warning-area {
+            background: rgba(0, 0, 0, 0.85); /* Gelap transparan */
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+
+        /* 3. AREA CHAT (Sama seperti member) */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center; /* Teks rata tengah ala narasi */
+        }
+
+        /* Animasi muncul */
+        .message { margin-bottom: 30px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Style Teks */
+        .sender-name { font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9rem; }
+        
+        /* Warna AI (Sama seperti member: Putih) */
+        .msg-ai { color: #fff; font-size: 1.1rem; }
+        .msg-ai .sender-name { color: #fff; } 
+
+        /* Warna User Guest (Kita bedakan sedikit biar tahu ini Guest, misal Emas Pucat) */
+        .msg-user { color: #d4af37; font-size: 1.2rem; font-style: italic; }
+        .msg-user .sender-name { color: #d4af37; font-style: normal; }
+
+        /* 4. INPUT BAR (Sama persis seperti member: Glassmorphism) */
+        .input-area {
+            background: rgba(255,255,255,0.05); /* Transparan */
+            backdrop-filter: blur(10px); /* Efek Blur */
+            padding: 20px;
+            position: sticky;
+            bottom: 0;
+        }
+        .input-group {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50px;
+            padding: 5px;
+            border: 1px solid #555;
+        }
+        .form-control-chat {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding-left: 20px;
+        }
+        .form-control-chat:focus { background: transparent; color: #fff; box-shadow: none; }
+        
+        .btn-send {
+            border-radius: 50px;
+            background-color: #6c757d; /* Abu-abu untuk Guest */
+            color: white;
+            padding: 5px 25px;
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-send:hover { background-color: #5a6268; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- BAGIAN 1: HEADER PERINGATAN GUEST (Yang diminta tetap ada) -->
+    <div class="guest-warning-area">
+        <div class="container">
+            
+            <!-- Alert Biru (Identitas) -->
+            <div class="alert alert-dark bg-transparent text-info border-info py-2 mb-2 d-flex justify-content-between align-items-center" style="border-style: dashed;">
+                <span>
+                    <strong>Anda masuk sebagai Warga Asing (Guest).</strong> Data anda tidak disimpan.
+                </span>
+                <a href="{{ url_for('index') }}" class="btn btn-sm btn-outline-light">Home</a>
+            </div>
+
+            <!-- Alert Kuning (Peringatan) -->
+            <div class="alert alert-dark bg-transparent text-warning border-warning py-1 mb-0 d-flex justify-content-between align-items-center" style="font-size: 0.85rem;">
+                <span>
+                    <strong>Peringatan:</strong> Anda dalam mode "Free to Play". Progress chat ini akan hilang jika browser ditutup.
+                    <a href="{{ url_for('signup') }}" class="text-warning text-decoration-underline fw-bold ms-1">Daftar Sekarang untuk Simpan Data!</a>
+                </span>
+                <a href="{{ url_for('reset_guest') }}" class="text-danger text-decoration-none" title="Reset Chat"><small>Reset Chat ↻</small></a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- BAGIAN 2: CHAT AREA (Looping dari Session) -->
+    <div class="chat-container" id="chatBox">
+        <!-- Menampilkan Pesan Awal (Jika ada di session) -->
+        {% for msg in messages %}
+            <div class="message {% if msg.sender == 'User' %}msg-user{% else %}msg-ai{% endif %}">
+                <span class="sender-name">
+                    {% if msg.sender == 'User' %}Unknown User (Guest){% else %}SYSTEM{% endif %}
+                </span>
+                {{ msg.content }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- BAGIAN 3: INPUT AREA (Desain baru) -->
+    <div class="input-area">
+        <form method="POST">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control form-control-chat" placeholder="Ketik pesan sebagai tamu..." autocomplete="off" autofocus required>
+                <button class="btn btn-send" type="submit">Kirim</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Otomatis scroll ke bawah
+        var chatBox = document.getElementById("chatBox");
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+</body>
+</html>

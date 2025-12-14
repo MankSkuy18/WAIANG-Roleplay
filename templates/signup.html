@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Override Background Khusus Halaman Ini -->
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='images/batik2.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header text-center">
+                Sign Up
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/signup">
+                    <!-- Username untuk Login -->
+                    <div class="mb-3">
+                        <label>Email (User ID)</label>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan Email" required>
+                        <div class="form-text text-secondary">Digunakan untuk login ke sistem.</div>
+                    </div>
+
+                    <!-- Nama Karakter (Roleplay Name) -->
+                    <div class="mb-3">
+                        <label>Nama Lengkap</label>
+                        <input type="text" name="name" class="form-control" placeholder="Masukkan nama lengkap" required>
+                        <div class="form-text text-secondary">Sesuai KTP atau KK.</div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label>Password / Kode Keamanan</label>
+                        <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                        <div class="form-text text-secondary">Buat password yang aman dan mudah diingat.</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-dark border-top border-secondary">
+                <small>Sudah punya akun? <a href="{{ url_for('login') }}" class="text-info">Masuk di sini</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

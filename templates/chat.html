@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure: {{ adventure.character_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x900/?forest,dark,fantasy');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+        }
+
+        /* --- HEADER --- */
+        .top-bar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between; /* Kiri & Kanan menjauh */
+            align-items: center;
+            border-bottom: 1px solid #45a29e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+            position: relative; /* Penting untuk logo tengah */
+        }
+
+        /* LOGO TENGAH (BARU) */
+        .brand-logo {
+            position: absolute;      /* Agar posisinya bebas dari elemen kiri/kanan */
+            left: 50%;               /* Titik mulai di tengah layar */
+            transform: translateX(-50%); /* Geser mundur 50% agar benar-benar di tengah */
+            
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 800;        /* Sangat tebal */
+            font-size: 1.5rem;
+            color: #66fcf1;          /* Warna Neon */
+            letter-spacing: 3px;     /* Jarak antar huruf renggang */
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.4); /* Efek glowing */
+            cursor: default;
+        }
+
+        /* Link Dashboard (Kiri) */
+        .nav-left a {
+            color: #c5c6c7;
+            text-decoration: none;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-left a:hover { color: #fff; }
+
+        /* Info Agent (Kanan) */
+        .agent-info {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            color: #c5c6c7;
+        }
+
+        .agent-name {
+            color: #66fcf1;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 5px;
+        }
+
+        /* --- CHAT AREA --- */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        .message { margin-bottom: 30px; animation: fadeIn 0.5s; }
+        .sender-name { font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9rem; }
+        
+        .msg-ai { color: #fff; font-size: 1.1rem; }
+        .msg-ai .sender-name { color: #aaa; font-style: italic; font-family: 'Segoe UI', sans-serif; } 
+
+        .msg-user { color: #d4af37; font-size: 1.2rem; font-style: italic; }
+        .msg-user .sender-name { color: #d4af37; font-style: normal; text-transform: uppercase; letter-spacing: 1px; font-family: 'Segoe UI', sans-serif;}
+
+        /* --- INPUT BAR --- */
+        .input-area {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            position: sticky;
+            bottom: 0;
+        }
+        .input-group {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50px;
+            padding: 5px;
+            border: 1px solid #555;
+        }
+        .form-control-chat {
+            background: transparent;
+            border: none;
+            color: #fff;
+            padding-left: 20px;
+        }
+        .form-control-chat:focus { background: transparent; color: #fff; box-shadow: none; }
+        
+        .btn-send {
+            border-radius: 50px;
+            background-color: #45a29e;
+            color: #0b0c10;
+            padding: 5px 25px;
+            border: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-send:hover { background-color: #66fcf1; box-shadow: 0 0 10px #66fcf1; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: #45a29e; border-radius: 4px; }
+        
+        /* Responsif untuk HP: Logo mengecil */
+        @media (max-width: 768px) {
+            .brand-logo { font-size: 1.2rem; letter-spacing: 1px; }
+            .top-bar { padding: 10px 15px; }
+            .agent-info span { display: none; } /* Sembunyikan teks 'Agent:' di HP biar muat */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        
+        <!-- KIRI: Tombol Dashboard -->
+        <div class="nav-left">
+            <a href="{{ url_for('adventure_list') }}">
+                <i class="fas fa-arrow-left me-2"></i> Dashboard 
+                <span class="text-secondary small ms-2">| #{{ adventure.id }}</span>
+            </a>
+        </div>
+
+        <!-- TENGAH: LOGO WAIANG (BARU) -->
+        <div class="brand-logo">
+            WAIANG
+        </div>
+
+        <!-- KANAN: Identitas Agent -->
+        <div class="agent-info">
+            <span class="text-success me-2" style="font-size: 0.7rem;">● Connected</span>
+            Agent: <span class="agent-name">{{ current_user.name }}</span>
+        </div>
+    </div>
+
+    <!-- CHAT HISTORY -->
+    <div class="chat-container" id="chatBox">
+        {% for msg in adventure.messages %}
+            <div class="message {% if msg.sender == 'User' %}msg-user{% else %}msg-ai{% endif %}">
+                <span class="sender-name">
+                    {% if msg.sender == 'User' %}
+                        {{ adventure.character_name }}
+                    {% else %}
+                        NARRATOR
+                    {% endif %}
+                </span>
+                {{ msg.content }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- INPUT AREA -->
+    <div class="input-area">
+        <form method="POST">
+            <div class="input-group">
+                <input type="text" name="message" class="form-control form-control-chat" 
+                       placeholder="Apa tindakan {{ adventure.character_name }} selanjutnya?" 
+                       autocomplete="off" autofocus required>
+                <button class="btn btn-send" type="submit">
+                    <i class="fas fa-paper-plane"></i> Kirim
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var chatBox = document.getElementById("chatBox");
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+</body>
+</html>
